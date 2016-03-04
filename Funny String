@@ -1,0 +1,86 @@
+/*
+
+Suppose you have some string SS having length NN that is indexed from 00 to N−1N−1. You also have some string RR that is the reverse of string SS. SS is funny if the condition | S[j]−S[j−1] |=| R[j]−R[j−1] || S[j]−S[j−1] |=| R[j]−R[j−1] | is true for every jj from 11 to N−1N−1.
+
+Note: For some string SS, S[j]S[j] denotes the ASCII value of the jthjth zero-indexed character in SS. The absolute value of some integer xx is written as | x || x |.
+
+Input Format
+
+The first line contains an integer, TT (the number of test cases). 
+The TT subsequent lines each contain a string, where the ithith line is string SiSi.
+
+Sample Input
+
+2
+acxz
+bcxz
+Sample Output
+
+Funny
+Not Funny
+
+Explanation
+
+Test Case 0: S0=S0= "acxz" 
+|c−a|=2=|x−z||c−a|=2=|x−z| 
+|x−c|=21=|c−x||x−c|=21=|c−x| 
+|z−x|=2=|a−c||z−x|=2=|a−c| 
+We print Funny.
+
+Test Case 1: S1=S1= "bcxz" 
+|c−b|=1|c−b|=1, but |x−z|=2|x−z|=2 
+We stop evaluating the string (as |c−b|≠|x−z||c−b|≠|x−z|), and print Not Funny.
+*/
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        String[] inputs = readInput();
+        findFunnyStrs(inputs);
+    }
+    
+    public static String[] readInput(){
+        Scanner kb = new Scanner(System.in);
+        int n = Integer.parseInt(kb.nextLine());
+        String[] inputs = new String[n];
+        
+        for(int i = 0; i<n; i++){
+            inputs[i] = kb.nextLine();
+        }
+        return inputs;
+    }
+    
+    public static void printFunny(String[] inputs){
+        if(inputs == null || inputs.length == 0) return;
+        for(String str: inputs){
+            if(isFunny(str)) System.out.println("Funny");
+            else System.out.println("Not Funny");
+        }
+    }
+    
+    public static boolean isFunny(String str){
+        if(str == null || str.length() <=1) return true;
+        int i = 0;
+        int j = str.length()-1;
+        while(i<j){
+            int diff1 = -1;
+            int diff2 = -1;
+            if(i<str.length()-1)
+                diff1 = Math.abs(str.charAt(i+1) - str.charAt(i));
+            if(j>0)
+                diff2 = Math.abs(str.charAt(j-1) - str.charAt(j));
+            if(diff1 != -1 && diff2 != -1 && diff1 == diff2){
+                i++;
+                j--;
+            }else{
+                return false;
+            }
+        }
+        return true;
+    }
+}
