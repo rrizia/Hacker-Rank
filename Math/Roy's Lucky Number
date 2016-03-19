@@ -1,0 +1,52 @@
+import java.io.*;
+import java.util.*;
+public class Solution {
+    public static void main(String args[] ) throws Exception {
+        Scanner kb = new Scanner(System.in);
+        int n = kb.nextInt();
+        int[] nums = new int[n];
+        for(int i = 0; i<n; i++){
+            nums[i] = kb.nextInt();
+        }
+        findLucky(nums);
+    }
+    
+    public static void findLucky(int[] nums){
+        if(nums == null || nums.length == 0) return;
+        for(int i: nums){
+            ArrayList<Integer> divisors = getDivisors(i);
+            System.out.println(getLuckyCount(divisors));
+        }
+    }
+    
+    public static int getLuckyCount(ArrayList<Integer> nums){
+        if(nums == null || nums.size() == 0) return 0;
+        int c = 0;
+        for(int i: nums){
+            while(i>0){
+                if(i%10 == 3 || i%10 == 5){
+                    c++;
+                    break;
+                }else{
+                    i = i/10;
+                }
+            }
+        }
+        return c;
+    }
+    public static ArrayList<Integer> getDivisors(int num){
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        int limit = (int)Math.sqrt(num);
+        int i = 1;
+        while(i<=limit) {
+            if (num % i == 0) {
+                result.add(i);
+                 if (i != (num / i)) {
+                     result.add(num/i);
+                 }
+            }
+            i++;
+        }
+        return result;
+    }
+}
